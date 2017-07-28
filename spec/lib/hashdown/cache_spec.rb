@@ -7,16 +7,16 @@ describe Hashdown do
       after  { Object.send(:remove_const, 'Rails') }
 
       it 'delegates to Rails.cache if available' do
-        Hashdown.cache.should eq Rails.cache
+        expect(Hashdown.cache).to eq Rails.cache
       end
 
       it 'incorporates the environment in the cache key' do
-        Hashdown.cache_key(:finder, 'MyModel', 'some-value').should match(/development/)
+        expect(Hashdown.cache_key(:finder, 'MyModel', 'some-value')).to match(/development/)
       end
     end
 
     it 'creates a new cache store if Rails.cache unavailable' do
-      Hashdown.cache.class.should eq ActiveSupport::Cache::MemoryStore
+      expect(Hashdown.cache.class).to eq ActiveSupport::Cache::MemoryStore
     end
   end
 end

@@ -3,30 +3,30 @@ require 'spec_helper'
 describe Hashdown::Finder do
   describe 'bracket lookup' do
     it 'is added to enabled models' do
-      State.should respond_to(:[])
+      expect(State).to respond_to(:[])
     end
 
     it 'finds a record by a string key value' do
-      State['CA'].name.should eq 'California'
+      expect(State['CA'].name).to eq 'California'
     end
 
     it 'finds a record by a symbol key value' do
-      State[:CO].name.should eq 'Colorado'
+      expect(State[:CO].name).to eq 'Colorado'
     end
 
     it 'adds uniqueness validation to key attribute' do
-      State.where(abbreviation: 'CO').count.should eq 1
-      State.new(abbreviation: 'CO').should_not be_valid
+      expect(State.where(abbreviation: 'CO').count).to eq 1
+      expect(State.new(abbreviation: 'CO')).not_to be_valid
     end
   end
 
   describe 'missing/invalid key' do
     it 'raises record not found exception' do
-      lambda { State[:HI] }.should raise_error(ActiveRecord::RecordNotFound)
+      expect(lambda { State[:HI] }).to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'allows setting a default to avoid exception' do
-      lambda { StateDefaultNil[:HI].should be_nil }.should_not raise_error
+      expect(lambda { expect(StateDefaultNil[:HI]).to be_nil }).not_to raise_error
     end
   end
 
@@ -35,9 +35,9 @@ describe Hashdown::Finder do
 
     it 'caches found records' do
       scope = double(first: florida)
-      State.should_receive(:where).once.and_return(scope)
+      expect(State).to receive(:where).once.and_return(scope)
 
-      2.times { State[:FL].name.should eq 'Florida' }
+      2.times { expect(State[:FL].name).to eq 'Florida' }
     end
 
     describe 'in test environment' do
@@ -46,15 +46,15 @@ describe Hashdown::Finder do
 
       it 'forces cache miss' do
         scope = double(first: florida)
-        State.should_receive(:where).twice.and_return(scope)
+        expect(State).to receive(:where).twice.and_return(scope)
 
-        2.times { State[:FL].name.should eq 'Florida' }
+        2.times { expect(State[:FL].name).to eq 'Florida' }
       end
     end
 
     it 'clears the cache on save' do
       scope = double(first: florida)
-      State.should_receive(:where).twice.and_return(scope)
+      expect(State).to receive(:where).twice.and_return(scope)
 
       State[:FL].save
       State[:FL]
@@ -62,7 +62,7 @@ describe Hashdown::Finder do
 
     it 'clears the cache on destroy' do
       scope = double(first: florida)
-      State.should_receive(:where).twice.and_return(scope)
+      expect(State).to receive(:where).twice.and_return(scope)
 
       State[:FL].destroy
       State[:FL]

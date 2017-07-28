@@ -1,6 +1,5 @@
 require 'pry-nav'
 require 'rspec'
-require 'rspec/autorun'
 
 require 'sqlite3'
 require 'active_record'
