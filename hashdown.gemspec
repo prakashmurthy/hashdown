@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/rubysolo/hashdown"
   gem.license       = 'MIT'
 
-  gem.add_dependency 'activerecord', '~> 4.0'
+  gem.add_dependency 'activerecord', '~> 5.0'
 
   gem.add_development_dependency 'pry-nav'
   gem.add_development_dependency 'rake'
